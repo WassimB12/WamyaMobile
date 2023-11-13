@@ -170,12 +170,15 @@ public class MyDatabaseOperations {
     public long insertAppointement(Appointement appointement) {
         ContentValues values = new ContentValues();
         values.put("date", formatDate(appointement.getDate()));
+        values.put("address", appointement.getAddress());
+        values.put("contact", appointement.getContact());
+
         values.put("provider_name", appointement.getProviderName());
         values.put("customer", appointement.getCustomer());
         values.put("annonce_id", appointement.getAnnonceId());
         values.put("status", appointement.getStatus() ? 1 : 0);
 
-        return database.insert("appointement", null, values);
+        return database.insert(MyDatabaseHelper.TABLE_APPOI, null, values);
     }
 
     public List<Appointement> getAllAppointements() {
@@ -209,13 +212,13 @@ public class MyDatabaseOperations {
     }
 
     private String formatDate(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
         return dateFormat.format(date);
     }
 
-    private Date parseDate(String dateString) {
+    public Date parseDate(String dateString) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
             return dateFormat.parse(dateString);
         } catch (Exception e) {
             return null;

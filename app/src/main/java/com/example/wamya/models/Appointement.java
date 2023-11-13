@@ -7,7 +7,8 @@ import java.util.Date;
 public class Appointement {
 
     private int id;
-
+    private String address;
+private String contact ;
     private Date date;
     private String providerName;
     private String customer;
@@ -15,6 +16,15 @@ public class Appointement {
     private Boolean status=false;
 
 
+    public Appointement(Date date, String address, String contact,  String providerName, String customer, int annonceId, Boolean status) {
+        this.address = address;
+        this.contact = contact;
+        this.date = date;
+        this.providerName = providerName;
+        this.customer = customer;
+        this.annonceId = annonceId;
+        this.status = status;
+    }
 
     public Appointement() {
     }
@@ -25,6 +35,14 @@ public class Appointement {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getDate() {
@@ -65,6 +83,14 @@ public class Appointement {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }
 

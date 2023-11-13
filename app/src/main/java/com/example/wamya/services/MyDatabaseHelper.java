@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "mydatabase.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
 
     // Table and column names
     public static final String TABLE_USERS = "users";
@@ -28,13 +28,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ANNONCE_IS_SERVICE_PROVIDER = "is_service_provider";
     public static final String COLUMN_ANNONCE_USER = "user";
     //appointement
-    private static final String TABLE_APPOI = "appointement";
-    private static final String COLUMN_APPOINTEMENT_ID = "id";
-    private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_PROVIDER_NAME = "provider_name";
-    private static final String COLUMN_CUSTOMER = "customer";
-    private static final String COLUMN_ANNOUNCE_ID = "annonce_id";
-    private static final String COLUMN_STATUS = "status";
+    public static final String TABLE_APPOI = "appointement";
+    public static final String COLUMN_APPOINTEMENT_ID = "id";
+
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_CONTACT = "contact";
+
+    public static final String COLUMN_PROVIDER_NAME = "provider_name";
+    public static final String COLUMN_CUSTOMER = "customer";
+    public static final String COLUMN_ANNOUNCE_ID = "annonce_id";
+    public static final String COLUMN_STATUS = "status";
 
     // Constructor
     public MyDatabaseHelper(Context context) {
@@ -71,7 +74,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String createAppoiTable =
                 "CREATE TABLE " + TABLE_APPOI + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        COLUMN_DATE + " TEXT," +
+                        COLUMN_DATE + " TEXT," +COLUMN_ADDRESS + " TEXT,"+COLUMN_CONTACT + " TEXT,"+
                         COLUMN_PROVIDER_NAME + " TEXT," +
                         COLUMN_CUSTOMER + " TEXT," +
                         COLUMN_ANNOUNCE_ID + " INTEGER," +
