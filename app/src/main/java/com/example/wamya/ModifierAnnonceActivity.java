@@ -89,7 +89,7 @@ public class ModifierAnnonceActivity extends AppCompatActivity {
         existingAnnonce.setDescription(description);
         existingAnnonce.setType(annonceType);
         existingAnnonce.setServiceProvider(isServiceProvider);
-
+//hadhemi
         // Update the Annonce in the database
         long result = dbOperations.updateAnnonce(existingAnnonce);
         if (result > 0) {
