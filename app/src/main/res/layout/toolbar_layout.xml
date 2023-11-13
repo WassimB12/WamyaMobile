@@ -1,0 +1,35 @@
+<!-- toolbar_layout.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary">
+
+    <!-- Left side: Notification button -->
+    <ImageButton
+        android:id="@+id/notificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/notification"/>
+
+    <!-- Center: Title (You can customize this part based on your needs) -->
+    <TextView
+        android:id="@+id/toolbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="Wamya"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <!-- Right side: User button -->
+    <ImageButton
+        android:id="@+id/userButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/person" />
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">wamya</string>
+    <string name="title_activity_creer_annonce">CreerAnnonce</string>
+    <string-array name="annonce_types_array">
+        <item>Plomberie</item>
+        <item>Electricité</item>
+        <item>Autre</item>
+    </string-array>
+</resources>

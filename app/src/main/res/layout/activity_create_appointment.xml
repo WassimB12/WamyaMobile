@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/appointmentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="New Appointment"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:id="@+id/appointmentIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/appointmentTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/calendar" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="381dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/appointmentIcon"
+        android:layout_marginTop="32dp"
+        android:height="48dp"
+        android:background="@drawable/pill_shape"
+        android:hint="  Select date "
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editTextAddress"
+        android:layout_width="377dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/editTextDate"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/pill_shape"
+        android:hint="  Enter Address"
+        android:inputType="text"
+        android:textSize="20sp"
+
+        />
+
+
+    <EditText
+        android:id="@+id/editTextContact"
+        android:layout_width="375dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/editTextAddress"
+        android:layout_marginTop="16dp"
+        android:height="48dp"
+        android:background="@drawable/pill_shape"
+        android:hint="  Enter Contact Number"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/buttonSaveAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextContact"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Save Appointment"
+        android:textSize="20sp" />
+
+</RelativeLayout>

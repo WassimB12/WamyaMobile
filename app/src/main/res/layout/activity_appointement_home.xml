@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:padding="16dp"
+    tools:context="com.example.wamya.ui.AppointementHome">
+
+    <!-- Title: Search for Service Provider -->
+
+    <!-- Search Bar -->
+    <TextView
+        android:id="@+id/searchTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#004815C9"
+        android:backgroundTint="#3D10B5"
+        android:fontFamily="@font/amaranth_bold"
+        android:foregroundTint="#4815C9"
+        android:text="Search for Service Provider"
+        android:textColor="#130140"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="382dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/searchTitle"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/pill_shape"
+        android:hint="   Enter search keywords"
+        android:textSize="20sp"></EditText>
+
+    <!-- Title: Choose a Category -->
+
+    <!-- Category Icons -->
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchBar"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#3D10B5"
+        android:fontFamily="@font/amaranth_bold"
+        android:foregroundTint="#4815C9"
+        android:text="Or search by Category"
+        android:textColor="#130140"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/categoryIcons"
+        android:layout_width="374dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/categoryTitle"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/pill_shape"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Icon 1 -->
+<!--        <ImageView-->
+<!--            android:id="@+id/icon1"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            android:src="@drawable/a" />-->
+
+<!--        &lt;!&ndash; Icon 2 &ndash;&gt;-->
+<!--        <ImageView-->
+<!--            android:id="@+id/icon2"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            android:src="@drawable/b" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/icon3"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            android:src="@drawable/c" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/icon4"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            android:src="@drawable/d" />-->
+<!--        &lt;!&ndash; Add more category icons as needed &ndash;&gt;-->
+
+    </LinearLayout>
+
+    <!-- Title: Post a Publication -->
+
+    <!-- Text View to Post a Publication -->
+
+    <!-- Button to Post -->
+    <TextView
+        android:id="@+id/publicationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryIcons"
+        android:layout_marginTop="43dp"
+        android:backgroundTint="#3D10B5"
+        android:fontFamily="@font/amaranth_bold"
+        android:foregroundTint="#4815C9"
+        android:text="Or post a Publication"
+        android:textColor="#130140"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/publicationTextView"
+        android:layout_width="366dp"
+        android:layout_height="86dp"
+        android:layout_below="@id/publicationTitle"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/pill_shape"
+        android:hint="  Write your publication here"
+        android:textSize="21sp" />
+
+    <Button
+        android:id="@+id/postButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/publicationTextView"
+        android:layout_marginTop="29dp"
+        android:text="Post"
+        android:textSize="20sp" />
+</RelativeLayout>

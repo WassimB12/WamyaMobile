@@ -1,0 +1,5 @@
+<!-- stadium_edittext_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- Background color (white in this example) -->
+    <corners android:radius="25dp" /> <!-- Adjust the radius for rounded edges -->
+</shape>

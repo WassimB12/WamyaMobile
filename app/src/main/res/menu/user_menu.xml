@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_mon_profile"
+        android:title="Mon Profile"/>
+    <item
+        android:id="@+id/action_mes_annonces"
+        android:title="Mes Annonces"/>
+    <item
+        android:id="@+id/action_mes_reservations"
+        android:title="Mes Reservations"/>
+    <item
+        android:id="@+id/action_deconnecter"
+        android:title="Deconnecter"/>
+</menu>
