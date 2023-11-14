@@ -1,6 +1,7 @@
 package com.example.wamya;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,9 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.appointement_list);
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+            String customerUsername = sharedPreferences.getString("username", "Anonyme");
+
 
             appointmentListView = findViewById(R.id.appointmentList);
             addAppointmentButton = findViewById(R.id.addAppointmentButton);
@@ -36,6 +40,7 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
             List<Appointement> appointements = fetchAppointements();
             AppointementAdapter adapter = new AppointementAdapter(this,appointements);
             appointmentListView.setAdapter(adapter);
+
 
             // Handle item click on the list view
             appointmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,12 +72,18 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
 
        List<Appointement> appointements = fetchAppointements();
        AppointementAdapter adapter = new AppointementAdapter(this,appointements);
-       appointmentListView.setAdapter(adapter);}
+       appointmentListView.setAdapter(adapter);
+      }
 
     private List<Appointement> fetchAppointements() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        String customerUsername = sharedPreferences.getString("username", "Anonyme");
+/*
+        if(customerUsername==null){customerUsername="wasim";}
+*/
         MyDatabaseOperations dbOperations = new MyDatabaseOperations(this);
         dbOperations.open();
-        List<Appointement> appointements =  dbOperations.getAllAppointements();
+        List<Appointement> appointements =  dbOperations.getAllAppointements(customerUsername);
         dbOperations.close();
         // Assuming this method returns a Cursor
        return appointements;

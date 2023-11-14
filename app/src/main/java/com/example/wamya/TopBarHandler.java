@@ -95,7 +95,9 @@ public class TopBarHandler {
                 showToast("Mes Annonces clicked");
                 return true;
             } else if (item.getItemId() == R.id.action_mes_reservations) {
-                showToast("Mes Reservations clicked");
+
+                Intent intent = new Intent(context, AppointementList.class); // Replace with your login activity class
+                context.startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.action_deconnecter) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();

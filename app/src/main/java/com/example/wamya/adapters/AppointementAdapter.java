@@ -101,7 +101,12 @@ public class AppointementAdapter extends ArrayAdapter<Appointement> {
                         MyDatabaseOperations db = new MyDatabaseOperations(context);
                         db.open();
                         currentAppointement.setStatus(newStatus); // Update the Appointement object
-                        long result= db.updateAppointementStatus(currentAppointement.getId(), newStatus); // Update the database
+                        long result= db.updateAppointement(currentAppointement);
+                       if(currentAppointement.getStatus()==true) {Toast.makeText(v.getContext(), "Rendez-vous accépté ",
+                               Toast.LENGTH_SHORT).show();}
+                        if(currentAppointement.getStatus()==false)
+                        {Toast.makeText(v.getContext(), "Rendez-vous rejeté ", Toast.LENGTH_SHORT).show();}
+
                         db.close();
                     }
                 }
