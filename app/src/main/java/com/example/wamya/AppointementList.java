@@ -49,6 +49,8 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
             addAppointmentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(AppointementList.this, "Choisir un offre d'abord", Toast.LENGTH_SHORT).show();
+                    finish();
                     Intent i = new Intent(AppointementList.this, HomeActivity.class);
 
                    startActivity(i);
