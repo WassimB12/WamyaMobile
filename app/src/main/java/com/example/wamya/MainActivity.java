@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wamya.models.User;
+import com.example.wamya.services.MyDatabaseHelper;
 import com.example.wamya.services.MyDatabaseOperations;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         signUpTextView = findViewById(R.id.signUpTextView);
 
         // Set click listener for the login button
-// Set click listener for the login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,23 +46,33 @@ public class MainActivity extends AppCompatActivity {
                 MyDatabaseOperations dbOperations = new MyDatabaseOperations(MainActivity.this);
                 dbOperations.open();
 
-                // Query the database to check if the user exists and the password is correct
+                // Query the database to check if the user exists and get user data
                 Cursor cursor = dbOperations.getUser(username, password);
 
                 if (cursor != null && cursor.getCount() > 0) {
-                    if (cursor.moveToFirst()){
+                    if (cursor.moveToFirst()) {
+                        // Retrieve user data
+                        int userId = cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ID));
+                        String userRoleString = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ROLE));
+                        User.UserRole userRole = User.UserRole.valueOf(userRoleString);
+
+                        // Save user data in shared preferences
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("userId", userId);
                         editor.putString("username", username);
+                        editor.putString("userRole", userRole.name());
                         editor.apply();
+
+                        // Login successful, start HomeActivity
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish(); // Optionally finish the current activity
                     }
-                    // Login successful
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish(); // Optionally finish the current activity
                 } else {
                     // Login failed, show appropriate message
                     // You can display a message to the user indicating that the login failed
+                    showToast("Échec de la connexion. Veuillez vérifier vos informations.");
                 }
 
                 // Close the cursor and database
@@ -87,5 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Helper method to show toast messages in French
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -36,6 +36,28 @@ public class User {
         this.username = username;
     }
 
+    public User() {
+    }
+
+    public User(int id, String username, String password, String email, boolean isBlocked, String address, String phoneNumber, UserRole role, List<Annonce> annonces, List<Reservation> reservations, List<Notification> notifications, List<Evaluation> evaluations) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.isBlocked = isBlocked;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.annonces = annonces;
+        this.reservations = reservations;
+        this.notifications = notifications;
+        this.evaluations = evaluations;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }

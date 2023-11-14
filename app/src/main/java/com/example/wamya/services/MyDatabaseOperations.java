@@ -51,17 +51,65 @@ public class MyDatabaseOperations {
     }
 
     // Query all users from the database
-    public Cursor getAllUsers() {
-        return database.query(MyDatabaseHelper.TABLE_USERS, null, null, null, null, null, null);
+    public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<>();
+
+        Cursor cursor = database.query(MyDatabaseHelper.TABLE_USERS, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                User user = cursorToUser(cursor);
+                userList.add(user);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+
+        return userList;
+    }
+
+    private User cursorToUser(Cursor cursor) {
+        User user = new User();
+        user.setId(cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ID)));
+        user.setUsername(cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_USERNAME)));
+        user.setPassword(cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_PASSWORD)));
+        user.setEmail(cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_EMAIL)));
+        user.setBlocked(cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_IS_BLOCKED)) == 1);
+        user.setAddress(cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ADDRESS)));
+        user.setPhoneNumber(cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_PHONE_NUMBER)));
+        String roleString = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ROLE));
+        User.UserRole role = (roleString != null) ? User.UserRole.valueOf(roleString) : User.UserRole.USER;
+        user.setRole(role);
+
+        return user;
+    }
+
+
+    public int updateUserById(int id, User user) {
+        ContentValues values = new ContentValues();
+        values.put(MyDatabaseHelper.COLUMN_USERNAME, user.getUsername());
+        values.put(MyDatabaseHelper.COLUMN_PASSWORD, user.getPassword());
+        values.put(MyDatabaseHelper.COLUMN_EMAIL, user.getEmail());
+        values.put(MyDatabaseHelper.COLUMN_IS_BLOCKED, user.isBlocked() ? 1 : 0);
+        values.put(MyDatabaseHelper.COLUMN_ADDRESS, user.getAddress());
+        values.put(MyDatabaseHelper.COLUMN_PHONE_NUMBER, user.getPhoneNumber());
+        values.put(MyDatabaseHelper.COLUMN_ROLE, user.getRole().name());
+
+        String whereClause = MyDatabaseHelper.COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(id)};
+
+        return database.update(MyDatabaseHelper.TABLE_USERS, values, whereClause, whereArgs);
     }
 
     // MyDatabaseOperations.java
 
     public Cursor getUser(String username, String password) {
         String[] columns = {
+                MyDatabaseHelper.COLUMN_ID,
                 MyDatabaseHelper.COLUMN_USERNAME,
                 MyDatabaseHelper.COLUMN_PASSWORD,
-                MyDatabaseHelper.COLUMN_ID
+                MyDatabaseHelper.COLUMN_ROLE  // Add the role column here
         };
 
         String selection = MyDatabaseHelper.COLUMN_USERNAME + " = ? AND " +
@@ -71,11 +119,18 @@ public class MyDatabaseOperations {
         return database.query(MyDatabaseHelper.TABLE_USERS, columns, selection, selectionArgs, null, null, null);
     }
 
+
     public User getUserById(int id) {
         User user = null;
         String[] columns = {
                 MyDatabaseHelper.COLUMN_ID,
                 MyDatabaseHelper.COLUMN_USERNAME,
+                MyDatabaseHelper.COLUMN_PASSWORD,
+                MyDatabaseHelper.COLUMN_EMAIL,
+                MyDatabaseHelper.COLUMN_IS_BLOCKED,
+                MyDatabaseHelper.COLUMN_ADDRESS,
+                MyDatabaseHelper.COLUMN_PHONE_NUMBER,
+                MyDatabaseHelper.COLUMN_ROLE
         };
 
         String selection = MyDatabaseHelper.COLUMN_ID + " = ?";
@@ -84,11 +139,28 @@ public class MyDatabaseOperations {
         Cursor cursor = database.query(MyDatabaseHelper.TABLE_USERS, columns, selection, selectionArgs, null, null, null);
 
         if (cursor.moveToFirst()) {
-            user = new User(cursor.getInt(0), cursor.getString(1));
+            int userId = cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ID));
+            String username = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_USERNAME));
+            String password = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_PASSWORD));
+            String email = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_EMAIL));
+            boolean isBlocked = cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_IS_BLOCKED)) == 1;
+            String address = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ADDRESS));
+            String phoneNumber = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_PHONE_NUMBER));
+            String roleString = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COLUMN_ROLE));
+            User.UserRole role = (roleString != null) ? User.UserRole.valueOf(roleString) : User.UserRole.USER;
+
+            user = new User(userId, username);
+            user.setPassword(password);
+            user.setEmail(email);
+            user.setBlocked(isBlocked);
+            user.setAddress(address);
+            user.setPhoneNumber(phoneNumber);
+            user.setRole(role);
         }
         cursor.close();
         return user;
     }
+
 
 
     public long insertAnnonce(Annonce annonce) {
@@ -297,10 +369,3 @@ public class MyDatabaseOperations {
         }
     }
 }
-
-
-
-
-
-
-

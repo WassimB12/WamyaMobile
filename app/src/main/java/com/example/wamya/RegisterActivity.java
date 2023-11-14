@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wamya.models.User;
 import com.example.wamya.services.MyDatabaseHelper;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -105,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         return isValid;
     }
+
     private void registerUser() {
         // Get the values from UI components
         String username = usernameEditText.getText().toString().trim();
@@ -112,6 +116,9 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String address = addressEditText.getText().toString().trim();
         String phoneNumber = phoneNumberEditText.getText().toString().trim();
+
+        // Set the default role for new users
+        User.UserRole role = User.UserRole.USER;
 
         // Get the writable database
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -123,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
         values.put(MyDatabaseHelper.COLUMN_EMAIL, email);
         values.put(MyDatabaseHelper.COLUMN_ADDRESS, address);
         values.put(MyDatabaseHelper.COLUMN_PHONE_NUMBER, phoneNumber);
+        values.put(MyDatabaseHelper.COLUMN_ROLE, role.name()); // Assign the user role
 
         // Insert a new user into the database
         long newRowId = db.insert(MyDatabaseHelper.TABLE_USERS, null, values);
@@ -130,15 +138,20 @@ public class RegisterActivity extends AppCompatActivity {
         // Check if the insertion was successful
         if (newRowId != -1) {
             // Registration successful
-            // You may want to show a success message or navigate to another activity
+            // Show a success message in French
+            Toast.makeText(RegisterActivity.this, "Inscription réussie!", Toast.LENGTH_SHORT).show();
+
+            // Navigate to another activity
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
         } else {
             // Registration failed
-            // You may want to show an error message
+            // Show an error message in French
+            Toast.makeText(RegisterActivity.this, "Échec de l'inscription. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
         }
 
         // Close the database connection
         dbHelper.close();
     }
+
 }
