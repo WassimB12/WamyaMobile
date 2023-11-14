@@ -312,6 +312,8 @@ public class MyDatabaseOperations {
     private Appointement cursorToappointement(Cursor cursor) {
         Appointement appointement = new Appointement();
         appointement.setId(cursor.getInt(cursor.getColumnIndex("id")));
+        appointement.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+
         appointement.setDate(parseDate(cursor.getString(cursor.getColumnIndex("date"))));
         appointement.setProviderName(cursor.getString(cursor.getColumnIndex("provider_name")));
         appointement.setCustomer(cursor.getString(cursor.getColumnIndex("customer")));

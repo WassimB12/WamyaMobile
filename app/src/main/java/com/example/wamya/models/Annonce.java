@@ -138,5 +138,4 @@ public class Annonce {
 
     public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
-    }
-}
+    }}
