@@ -1,5 +1,6 @@
 package com.example.wamya;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -43,7 +44,18 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
                     String selectedItem = (String) parent.getItemAtPosition(position);
                     Toast.makeText(AppointementList.this, "Selected Appointment: " + selectedItem, Toast.LENGTH_SHORT).show();
                 }
-            });}
+            });
+
+            addAppointmentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(AppointementList.this, HomeActivity.class);
+
+                   startActivity(i);
+                }
+            });
+
+        }
     @Override
     protected void onResume() {
         super.onResume();

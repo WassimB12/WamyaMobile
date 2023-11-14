@@ -1,7 +1,10 @@
 package com.example.wamya.adapters;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.content.SharedPreferences;
+
 
 import androidx.annotation.NonNull;
 
@@ -77,8 +82,40 @@ public class AppointementAdapter extends ArrayAdapter<Appointement> {
             acceptedToggleButton.setChecked(currentAppointement.getStatus());
 
 
+
+// Assuming sharedvalue and appointementProviderservice are strings
+            SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+            String customerUsername = sharedPreferences.getString("username", "Anonyme");
+            boolean isToggleButtonClickable = customerUsername.equals(currentAppointement.getProviderName());
+
+            acceptedToggleButton.setEnabled(isToggleButtonClickable);
+
+            acceptedToggleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Perform your onClick logic only if the ToggleButton is clickable
+                    if (isToggleButtonClickable) {
+                        boolean newStatus = acceptedToggleButton.isChecked();
+
+                        // Perform the update in your database
+                        MyDatabaseOperations db = new MyDatabaseOperations(context);
+                        db.open();
+                        currentAppointement.setStatus(newStatus); // Update the Appointement object
+                        long result= db.updateAppointementStatus(currentAppointement.getId(), newStatus); // Update the database
+                        db.close();
+                    }
+                }
+            });
+
+
+
+
+
+
+
             ImageButton editButton=listItemView.findViewById(R.id.imageButton2);
             ImageButton deleteButton=listItemView.findViewById(R.id.imageButton3);
+
 
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override

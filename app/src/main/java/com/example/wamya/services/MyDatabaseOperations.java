@@ -276,6 +276,12 @@ public class MyDatabaseOperations {
         database.delete(MyDatabaseHelper.TABLE_APPOI,
                 MyDatabaseHelper.COLUMN_APPOINTEMENT_ID + " = ?", new String[] { String.valueOf(id) });
     }
+    public long updateAppointementStatus(int appointementId, boolean newStatus) {
+        ContentValues values = new ContentValues();
+        values.put("status", newStatus ? 1 : 0); // Assuming 1 is true and 0 is false
+
+        return database.update(MyDatabaseHelper.TABLE_APPOI, values, "id = ?", new String[]{String.valueOf(appointementId)});
+    }
 
     private String formatDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
