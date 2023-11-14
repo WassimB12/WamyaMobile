@@ -26,6 +26,17 @@ private String contact ;
         this.status = status;
     }
 
+    public Appointement(int id, String address, String contact, Date date, String providerName, String customer, int annonceId, Boolean status) {
+        this.id = id;
+        this.address = address;
+        this.contact = contact;
+        this.date = date;
+        this.providerName = providerName;
+        this.customer = customer;
+        this.annonceId = annonceId;
+        this.status = status;
+    }
+
     public Appointement() {
     }
 

@@ -1,5 +1,6 @@
 package com.example.wamya;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +10,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.wamya.adapters.AnnonceAdapter;
+import com.example.wamya.adapters.AppointementAdapter;
+import com.example.wamya.models.Annonce;
+import com.example.wamya.models.Appointement;
+import com.example.wamya.services.MyDatabaseOperations;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppointementList extends AppCompatActivity { private ListView appointmentListView;
         private Button addAppointmentButton;
@@ -22,9 +32,8 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
             addAppointmentButton = findViewById(R.id.addAppointmentButton);
 
             // Sample data for the appointment list
-            String[] appointmentData = {"Appointment 1", "Appointment 2", "Appointment 3"};
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_appointment, R.id.appointmentTitle, appointmentData);
+            List<Appointement> appointements = fetchAppointements();
+            AppointementAdapter adapter = new AppointementAdapter(this,appointements);
             appointmentListView.setAdapter(adapter);
 
             // Handle item click on the list view
@@ -34,5 +43,27 @@ public class AppointementList extends AppCompatActivity { private ListView appoi
                     String selectedItem = (String) parent.getItemAtPosition(position);
                     Toast.makeText(AppointementList.this, "Selected Appointment: " + selectedItem, Toast.LENGTH_SHORT).show();
                 }
-            });}}
+            });}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+   public void refresh(){ appointmentListView = findViewById(R.id.appointmentList);
+
+       List<Appointement> appointements = fetchAppointements();
+       AppointementAdapter adapter = new AppointementAdapter(this,appointements);
+       appointmentListView.setAdapter(adapter);}
+
+    private List<Appointement> fetchAppointements() {
+        MyDatabaseOperations dbOperations = new MyDatabaseOperations(this);
+        dbOperations.open();
+        List<Appointement> appointements =  dbOperations.getAllAppointements();
+        dbOperations.close();
+        // Assuming this method returns a Cursor
+       return appointements;
+    }
+
+
+}
 

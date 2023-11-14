@@ -210,6 +210,72 @@ public class MyDatabaseOperations {
 
         return appointement;
     }
+    public Cursor getAppointement(int id) {
+        return database.query(MyDatabaseHelper.TABLE_APPOI, null,
+                MyDatabaseHelper.COLUMN_APPOINTEMENT_ID + " = ?", new String[] { String.valueOf(id) },
+                null, null, null);
+    }
+
+    public Appointement getAppointementById(long appointementId) {
+        Appointement appointement = null;
+        String[] columns = {
+                "id",
+                "date",
+                "address",
+                "contact",
+                "provider_name",
+                "customer",
+                "annonce_id",
+                "status"
+        };
+        String selection = "id" + " = ?";
+        String[] selectionArgs = { String.valueOf(appointementId) };
+        Cursor cursor = database.query(
+                "appointement",
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            Date date = parseDate(cursor.getString(1));
+            String address = cursor.getString(2);
+            String contact = cursor.getString(3);
+            String providerName = cursor.getString(4);
+            String customer = cursor.getString(5);
+            int annonceId = cursor.getInt(6);
+            boolean status = cursor.getInt(7) == 1;
+
+            appointement = new Appointement(id, address, contact,date, providerName, customer, annonceId, status);
+        }
+
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+
+        return appointement;
+    }
+    public int updateAppointement(Appointement appointement) {
+        ContentValues values = new ContentValues();
+        values.put("date", formatDate(appointement.getDate()));
+        values.put("address", appointement.getAddress());
+        values.put("contact", appointement.getContact());
+        values.put("provider_name", appointement.getProviderName());
+        values.put("customer", appointement.getCustomer());
+        values.put("annonce_id", appointement.getAnnonceId());
+        values.put("status", appointement.getStatus() ? 1 : 0);
+
+        return database.update(MyDatabaseHelper.TABLE_APPOI, values,
+                "id = ?", new String[]{String.valueOf(appointement.getId())});
+    }
+
+    public void deleteAppointement(int id) {
+        database.delete(MyDatabaseHelper.TABLE_APPOI,
+                MyDatabaseHelper.COLUMN_APPOINTEMENT_ID + " = ?", new String[] { String.valueOf(id) });
+    }
 
     private String formatDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());

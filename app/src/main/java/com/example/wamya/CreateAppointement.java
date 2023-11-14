@@ -27,7 +27,8 @@ public class CreateAppointement extends AppCompatActivity {
     private EditText editTextDate, editTextAddress, editTextContact;
     private Button buttonSaveAppointment;
     private MyDatabaseOperations myDb;
-
+    int annonceId;
+    String serviceProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,9 @@ public class CreateAppointement extends AppCompatActivity {
         editTextAddress = findViewById(R.id.editTextAddress);
         editTextContact = findViewById(R.id.editTextContact);
         buttonSaveAppointment = findViewById(R.id.buttonSaveAppointment);
+        Intent intent1 = getIntent();
+         annonceId = intent1.getIntExtra("ANNONCE_ID", -1);
+        serviceProvider = intent1.getStringExtra("serviceProvider");
 
         editTextDate.setFocusable(false);
         editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +50,11 @@ public class CreateAppointement extends AppCompatActivity {
             }
         });
 
-        buttonSaveAppointment.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+       buttonSaveAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAppointement();
@@ -56,6 +64,8 @@ public class CreateAppointement extends AppCompatActivity {
 
             }
         });
+
+        // Retrieve additional data using more getIntExtra, getStringExtra, etc.
     }
 
     public void showDatePickerDialog() {
@@ -89,6 +99,8 @@ public class CreateAppointement extends AppCompatActivity {
             return null;
         }
     }
+
+
     private void createAppointement() {
         String contact = editTextContact.getText().toString();
         String address = editTextAddress.getText().toString();
@@ -99,25 +111,25 @@ public class CreateAppointement extends AppCompatActivity {
         Date date = parseDate(editTextDate.getText().toString());
         if (date == null) {
             Calendar calendar = Calendar.getInstance();
-            date =calendar.getTime();
-            }
-        int idAppoi = 1;
+            date =parseDate(formatDate(calendar.getTime()));
+        }
 
         MyDatabaseOperations dbOperations = new MyDatabaseOperations(this);
         dbOperations.open();
         Appointement appointement = new Appointement
-                (date,address,contact, null, customerUsername, 3, false);
+                (date,address,contact, serviceProvider, customerUsername, annonceId, false);
         long result = dbOperations.insertAppointement(appointement);
         dbOperations.close();
 
         if (result != -1) {
             Toast.makeText(CreateAppointement.this, "Rendez vous proposé!", Toast.LENGTH_SHORT).show();
-            idAppoi = +1;
             finish();
         } else {
             Toast.makeText(CreateAppointement.this, "Erreur.", Toast.LENGTH_SHORT).show();
         }
         finish();
     }
+
+
     }
 

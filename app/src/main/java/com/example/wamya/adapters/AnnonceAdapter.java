@@ -83,6 +83,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             public void onClick(View v) {
                 Intent rdvIntent = new Intent(v.getContext(), CreateAppointement.class);
                 rdvIntent.putExtra("ANNONCE_ID", annonce.getId());
+                rdvIntent.putExtra("serviceProvider", annonce.getUser());
+
                 v.getContext().startActivity(rdvIntent);
             }
         });

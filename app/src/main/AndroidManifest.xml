@@ -18,6 +18,7 @@
             android:label="@string/title_activity_creer_annonce"
             android:theme="@style/Theme.Wamya" />
 <activity android:name=".CreateAppointement"/>
+        <activity android:name=".UpdateAppointement"/>
     <activity android:name=".AppointementList"/>
         <activity android:name=".AppointementHome"/>
         <activity
