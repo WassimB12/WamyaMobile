@@ -1,8 +1,11 @@
 package com.example.wamya.services;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -181,10 +184,42 @@ public class MyDatabaseOperations {
         return database.insert(MyDatabaseHelper.TABLE_APPOI, null, values);
     }
 
-    public List<Appointement> getAllAppointements() {
+    public List<Appointement> getAllAppointements( String var) {
+        try{
         List<Appointement> appointements= new ArrayList<>();
+/*        Context context = null;
+        // Assuming 'var' is the variable holding the customer name you want to match
+           SharedPreferences sharedPreferences =  context.getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+            String customerUsername = sharedPreferences.getString("username", "Anonyme");
+
+
+
+   Methode1:         Cursor cursor = database.rawQuery("SELECT * FROM appointement WHERE customer = 'aaa'", null);
+
+            Methode2: String[] columns = {
+                    MyDatabaseHelper.COLUMN_APPOINTEMENT_ID,
+                    MyDatabaseHelper.COLUMN_DATE,
+                    MyDatabaseHelper.COLUMN_ADDRESS,
+                    MyDatabaseHelper.COLUMN_CONTACT,
+                    MyDatabaseHelper.COLUMN_PROVIDER_NAME,
+                    MyDatabaseHelper.COLUMN_CUSTOMER,
+                    MyDatabaseHelper.COLUMN_ANNOUNCE_ID,
+                    MyDatabaseHelper.COLUMN_STATUS
+            };
+
+
+
+            String selection = MyDatabaseHelper.COLUMN_CUSTOMER + " = ?";
+            String[] selectionArgs = {var};
+
+            Cursor cursor  = database.query(MyDatabaseHelper.TABLE_APPOI,columns, selection, selectionArgs, null, null, null);
+
+
+*/
+
 
         Cursor cursor = database.query("appointement", null, null, null, null, null, null);
+
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -195,8 +230,11 @@ public class MyDatabaseOperations {
             }
             cursor.close();
         }
+/*
 
-        return appointements;
+*/
+        return appointements; }catch (Exception e){e.printStackTrace();
+        return new ArrayList<>();}
     }
 
     private Appointement cursorToappointement(Cursor cursor) {

@@ -72,12 +72,19 @@ public class TopBarHandler {
                 context.startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.action_mes_annonces) {
-                showToast("Mes Annonces clicked");
+
                 return true;
             } else if (item.getItemId() == R.id.action_mes_reservations) {
-                showToast("Mes Reservations clicked");
+                Intent i = new Intent(context, AppointementList.class);
+                context.startActivity(i);
+                showToast("Liste des reservations");
                 return true;
-            } else if (item.getItemId() == R.id.action_deconnecter) {
+            } /*else if (item.getItemId() == R.id.action_mes_offres) {
+                Intent i = new Intent(context, AppointementList.class);
+                context.startActivity(i);
+                showToast("Liste des offres");
+                return true;}*/
+            else if (item.getItemId() == R.id.action_deconnecter) {
                 showToast("Deconnecter clicked");
                 return true;
             } else {

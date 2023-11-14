@@ -7,7 +7,8 @@
         android:title="Mes Annonces"/>
     <item
         android:id="@+id/action_mes_reservations"
-        android:title="Mes Reservations"/>
+        android:title="Mes Rendez-vous"/>
+
     <item
         android:id="@+id/action_deconnecter"
         android:title="Deconnecter"/>
